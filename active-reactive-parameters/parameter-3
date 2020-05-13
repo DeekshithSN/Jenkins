@@ -1,0 +1,21 @@
+if(sub_env.equals("Prod1")){
+  return ["Prod-server-1","Prod-server-2"]
+}
+else if(sub_env.equals("QA1")){
+  return ["QA1-server-1","QA1-server-2","QA1-server-3"]
+}
+else if(sub_env.equals("QA2")){
+  return ["No servers in this sub env"]
+}
+else if(sub_env.equals("Dev1")){
+  return ["Dev1-server-1","Dev1-server-2","Dev1-server-3"]
+}
+else if(sub_env.equals("Dev2")){
+  return ["Dev2-server-1","Dev2-server-2","Dev2-server-3"]
+}
+else if(sub_env.equals("Dev3")){
+  return ["No serveres"]
+}
+else{
+	return ["Select a server from dropdown"]
+}
