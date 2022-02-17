@@ -1,0 +1,14 @@
+def sout = new StringBuffer(), serr = new StringBuffer()
+def proc ="/opt/images.sh ${repo}".execute()
+proc.waitFor()       
+
+def output = proc.in.text
+def exitcode= proc.exitValue()
+def error = proc.err.text
+
+if (error) {
+    println "Std Err: ${error}"
+    println "Process exit code: ${exitcode}"
+    return exitcode
+}
+return output.tokenize()
