@@ -1,0 +1,12 @@
+pipeline{
+    agent any 
+    stages{
+        stage("check the connection k8s cluster"){
+            steps{
+                withCredentials([kubeconfigFile(credentialsId: 'kubernetes-config', variable: 'KUBECONFIG')]) {
+                    kubectl get po 
+                }
+            }
+        }
+    }
+}
