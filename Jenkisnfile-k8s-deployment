@@ -10,5 +10,19 @@ pipeline{
               }
             }
         }
+        
+        stage("replacing the image name and deploying to the cluster"){
+            steps{
+                script {
+                withCredentials([kubeconfigFile(credentialsId: 'kubernetes-config', variable: 'KUBECONFIG')]) {
+                    sh '''
+                    sed -i "s;IMAGENAME;$imagename;" jenkins-k8s.yaml
+                    kubectl apply -f jenkins-k8s.yaml
+                    '''
+                  }
+                }
+            }
+        } 
+        
     }
 }
