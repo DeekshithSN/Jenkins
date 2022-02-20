@@ -3,9 +3,11 @@ pipeline{
     stages{
         stage("check the connection k8s cluster"){
             steps{
+            script{
                 withCredentials([kubeconfigFile(credentialsId: 'kubernetes-config', variable: 'KUBECONFIG')]) {
-                    kubectl get po 
+                   sh ' kubectl get po '
                 }
+              }
             }
         }
     }
