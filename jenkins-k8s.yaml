@@ -33,3 +33,5 @@ spec:
         - name: react-ui
           image: 34.125.203.155:8083/IMAGENAME
           imagePullPolicy: IfNotPresent
+      imagePullSecrets:
+        - name: registry-secret
