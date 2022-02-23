@@ -1,4 +1,3 @@
-def sout = new StringBuffer(), serr = new StringBuffer()
 def proc ='/opt/repo.sh'.execute()
 proc.waitFor()       
 
