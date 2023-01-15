@@ -1,10 +1,9 @@
 pipeline {
 
-    agent none
+    agent any
     stages {
         
         stage('init'){
-            agent any
             steps{
                 sh 'echo this first stage'
             }
@@ -16,7 +15,6 @@ pipeline {
             }
         }
         stage('3stage'){
-            agent any
             steps{
                 sh 'echo this 3rd stage'
             }
