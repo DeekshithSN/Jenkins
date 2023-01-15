@@ -1,6 +1,10 @@
 pipeline {
 
-    agent any
+    agent {
+            docker {
+                image 'maven'
+            }
+        }
     stages {
         
         stage('init'){
@@ -9,11 +13,6 @@ pipeline {
             }
         }
         stage('secondstage'){
-            agent {
-                docker {
-                    image 'maven'
-                }
-            }
             steps{
                 sh 'mvn --version'
             }
