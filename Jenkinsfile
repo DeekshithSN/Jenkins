@@ -9,9 +9,13 @@ pipeline {
             }
         }
         stage('secondstage'){
-            agent { label 'master' }
+            agent {
+                docker {
+                    image 'maven'
+                }
+            }
             steps{
-                sh 'echo this 2nd stage'
+                sh 'mvn --version'
             }
         }
         stage('3stage'){
