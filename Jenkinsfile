@@ -2,8 +2,9 @@ pipeline {
 
     agent none
     stages {
-        agent any
+        
         stage('init'){
+            agent any
             steps{
                 sh 'echo this first stage'
             }
