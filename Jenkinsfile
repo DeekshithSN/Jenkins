@@ -5,7 +5,6 @@ pipeline {
 
     environment{
         script_options = "--clean 30"
-        branchname = env.BRANCH_NAME
     }
     agent {
             docker {
