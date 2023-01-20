@@ -11,6 +11,7 @@ pipeline {
     options { 
         buildDiscarder(logRotator(numToKeepStr: '5')) 
         timeout(time: 2, unit: 'MINUTES')  
+        timestamps()
         }
 
     agent any
