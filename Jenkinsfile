@@ -5,7 +5,7 @@ pipeline {
 
     environment{
         script_options = "--clean 30"
-        docker_password = credentials('docker-pass')
+        docker_password = credentials('docker-usr-pass')
     }
     agent any
     stages {
@@ -15,7 +15,7 @@ pipeline {
                 script{
                 echo "$script_options"
                 sh 'echo this first stage'
-                sh 'docker login -u deekshithsn -p $docker_password'
+                sh 'docker login -u $docker_password_USR -p $docker_password_PSW'
                 }
             }
         }
