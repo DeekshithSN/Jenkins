@@ -13,6 +13,11 @@ pipeline {
         timeout(time: 2, unit: 'MINUTES')  
         timestamps()
         }
+    parameters { 
+        string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: 'this is env') 
+        text(name: 'DEPLOY_TEXT', defaultValue: 'One\nTwo\nThree\n', description: 'this deloyment notes')
+        
+        }
 
     agent any
     stages {
@@ -24,7 +29,6 @@ pipeline {
                         echo "$script_options"
                         sh 'echo this first stage'
                         sh 'docker login -u $docker_password_USR -p $docker_password_PSW'
-                        sh 'sleep 80'
                     }
                 }
             }
