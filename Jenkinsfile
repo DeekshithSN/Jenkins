@@ -12,8 +12,10 @@ pipeline {
         
         stage('init'){
             steps{
+                script{
                 sh 'echo ${env.BRANCH_NAME}'
                 sh 'echo this first stage'
+                }
             }
         }
         stage('secondstage'){
