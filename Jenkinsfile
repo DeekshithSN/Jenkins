@@ -1,3 +1,5 @@
+currentBuild.displayName = "test-ui #"+currentBuild.number
+
 pipeline {
 
     agent {
