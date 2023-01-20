@@ -1,18 +1,21 @@
 currentBuild.displayName = "test-ui #"+currentBuild.number
 
+  def setJobDescription(){
+        currentBuild.displayName = "branch name"+env.BRANCH_NAME
+        }
 
 pipeline {
-    
+
     agent {
             docker {
                 image 'maven'
             }
         }
     stages {
-        currentBuild.description = "executed on"+ env.BRANCH_NAME
+        
         stage('init'){
             steps{
-                
+                setJobDescription()
                 sh 'echo this first stage'
             }
         }
