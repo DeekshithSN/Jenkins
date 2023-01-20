@@ -23,6 +23,7 @@ pipeline {
                         echo "$script_options"
                         sh 'echo this first stage'
                         sh 'docker login -u $docker_password_USR -p $docker_password_PSW'
+                        sh 'sleep 80'
                     }
                 }
             }
