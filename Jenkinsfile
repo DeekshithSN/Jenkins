@@ -1,8 +1,8 @@
 currentBuild.displayName = "test-ui #"+currentBuild.number
-currentBuild.description = "executed on"+env.NODE_NAME
+
 
 pipeline {
-
+    
     agent {
             docker {
                 image 'maven'
@@ -12,6 +12,7 @@ pipeline {
         
         stage('init'){
             steps{
+                currentBuild.description = "executed on"+ env.BRANCH_NAME
                 sh 'echo this first stage'
             }
         }
