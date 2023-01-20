@@ -16,7 +16,10 @@ pipeline {
     parameters { 
         string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: 'this is env') 
         text(name: 'DEPLOY_TEXT', defaultValue: 'One\nTwo\nThree\n', description: 'this deloyment notes')
-        
+        }
+
+    triggers { 
+        cron('H */4 * * 1-5') 
         }
 
     agent any
