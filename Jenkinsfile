@@ -7,6 +7,11 @@ pipeline {
         script_options = "--clean 30"
         docker_password = credentials('docker-usr-pass')
     }
+
+    options { 
+        buildDiscarder(logRotator(numToKeepStr: '5')) 
+        
+        }
     agent any
     stages {
         
