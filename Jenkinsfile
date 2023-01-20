@@ -3,6 +3,10 @@ currentBuild.displayName = "test-ui #"+currentBuild.number
 
 pipeline {
 
+    environment{
+        script_options = "--clean 30"
+        branchname = env.BRANCH_NAME
+    }
     agent {
             docker {
                 image 'maven'
@@ -13,13 +17,14 @@ pipeline {
         stage('init'){
             steps{
                 script{
-                echo "$env.BRANCH_NAME"
+                echo "$script_options"
                 sh 'echo this first stage'
                 }
             }
         }
         stage('secondstage'){
             steps{
+                sh 'printenv'
                 sh 'mvn --version'
             }
         }
