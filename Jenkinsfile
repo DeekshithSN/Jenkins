@@ -1,4 +1,5 @@
 currentBuild.displayName = "test-ui #"+currentBuild.number
+currentBuild.description = "executed on"+env.NODE_NAME
 
 pipeline {
 
