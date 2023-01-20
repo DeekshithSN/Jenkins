@@ -5,12 +5,9 @@ pipeline {
 
     environment{
         script_options = "--clean 30"
+        docker_password = credentials('docker-pass')
     }
-    agent {
-            docker {
-                image 'maven'
-            }
-        }
+    agent any
     stages {
         
         stage('init'){
@@ -18,10 +15,16 @@ pipeline {
                 script{
                 echo "$script_options"
                 sh 'echo this first stage'
+                sh 'docker login -u deekshithsn -p $docker_password'
                 }
             }
         }
         stage('secondstage'){
+            agent {
+                    docker {
+                        image 'maven'
+                    }
+                }
             steps{
                 sh 'printenv'
                 sh 'mvn --version'
