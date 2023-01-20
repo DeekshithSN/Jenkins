@@ -10,17 +10,20 @@ pipeline {
 
     options { 
         buildDiscarder(logRotator(numToKeepStr: '5')) 
-        
+        timeout(time: 2, unit: 'MINUTES')  
         }
+
     agent any
     stages {
         
         stage('init'){
             steps{
-                script{
-                echo "$script_options"
-                sh 'echo this first stage'
-                sh 'docker login -u $docker_password_USR -p $docker_password_PSW'
+                timeout(1){
+                    script{
+                        echo "$script_options"
+                        sh 'echo this first stage'
+                        sh 'docker login -u $docker_password_USR -p $docker_password_PSW'
+                    }
                 }
             }
         }
