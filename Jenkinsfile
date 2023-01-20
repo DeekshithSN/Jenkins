@@ -9,10 +9,10 @@ pipeline {
             }
         }
     stages {
-        
+        currentBuild.description = "executed on"+ env.BRANCH_NAME
         stage('init'){
             steps{
-                currentBuild.description = "executed on"+ env.BRANCH_NAME
+                
                 sh 'echo this first stage'
             }
         }
