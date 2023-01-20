@@ -1,7 +1,7 @@
 currentBuild.displayName = "test-ui #"+currentBuild.number
 
-  def setJobDescription(){
-        currentBuild.displayName = "branch name"+env.BRANCH_NAME
+  def setJobDescription(string b_name){
+        currentBuild.description = "branch name"+b_name
         }
 
 pipeline {
@@ -15,7 +15,7 @@ pipeline {
         
         stage('init'){
             steps{
-                setJobDescription()
+                setJobDescription(env.BRANCH_NAME)
                 sh 'echo this first stage'
             }
         }
