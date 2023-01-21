@@ -39,21 +39,23 @@ pipeline {
                 }
             }
         }
-        parallel {
-            stage('secondstage'){
-                agent {
-                        docker {
-                            image 'maven'
+        stage('parallel'){
+            parallel {
+                stage('secondstage'){
+                    agent {
+                            docker {
+                                image 'maven'
+                            }
                         }
+                    steps{
+                        sh 'printenv'
+                        sh 'mvn --version'
                     }
-                steps{
-                    sh 'printenv'
-                    sh 'mvn --version'
                 }
-            }
-            stage('3stage'){
-                steps{
-                    sh 'echo this 3rd stage'
+                stage('3stage'){
+                    steps{
+                        sh 'echo this 3rd stage'
+                    }
                 }
             }
         }
