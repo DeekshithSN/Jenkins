@@ -42,7 +42,7 @@ pipeline {
         stage('secondstage'){
 
             when{
-                branch 'master'
+                environment  name:'GIT_BRANCH', value: 'master'
             }
             agent {
                     docker {
