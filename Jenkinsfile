@@ -39,24 +39,22 @@ pipeline {
                 }
             }
         }
-        stage('secondstage'){
-
-            when{
-                expression { DEPLOY_ENV ==~ "prod" }
-            }
-            agent {
-                    docker {
-                        image 'maven'
+        parallel {
+            stage('secondstage'){
+                agent {
+                        docker {
+                            image 'maven'
+                        }
                     }
+                steps{
+                    sh 'printenv'
+                    sh 'mvn --version'
                 }
-            steps{
-                sh 'printenv'
-                sh 'mvn --version'
             }
-        }
-        stage('3stage'){
-            steps{
-                sh 'echo this 3rd stage'
+            stage('3stage'){
+                steps{
+                    sh 'echo this 3rd stage'
+                }
             }
         }
     }
