@@ -42,21 +42,13 @@ pipeline {
         stage('secondstage'){
 
             when{
-                branch 'master'
+                environment  name:'GIT_BRANCH', value: 'master'
             }
             agent {
                     docker {
                         image 'maven'
                     }
                 }
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "alice,bob"
-                parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                }
-            }
             steps{
                 sh 'printenv'
                 sh 'mvn --version'
