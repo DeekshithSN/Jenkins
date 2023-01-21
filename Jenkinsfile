@@ -42,7 +42,7 @@ pipeline {
         stage('secondstage'){
 
             when{
-                environment  name:'GIT_BRANCH', value: 'origin/master'
+                expression { DEPLOY_ENV ==~ "prod" }
             }
             agent {
                     docker {
