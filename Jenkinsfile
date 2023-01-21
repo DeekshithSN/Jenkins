@@ -40,6 +40,10 @@ pipeline {
             }
         }
         stage('secondstage'){
+
+            when{
+                branch 'master'
+            }
             agent {
                     docker {
                         image 'maven'
