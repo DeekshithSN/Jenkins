@@ -34,6 +34,7 @@ pipeline {
                         sh 'docker login -u $docker_password_USR -p $docker_password_PSW'
                         sh "echo ${params.DEPLOY_ENV}"
                         currentBuild.description = "The branch built + $GIT_BRANCH"
+                        addBadge(icon: 'green.gif', text: 'hello')
                     }
                 }
             }
@@ -44,6 +45,14 @@ pipeline {
                         image 'maven'
                     }
                 }
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
+                submitter "alice,bob"
+                parameters {
+                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                }
+            }
             steps{
                 sh 'printenv'
                 sh 'mvn --version'
