@@ -1,3 +1,5 @@
+currentBuild.displayName = "test-ui # "+currentBuild.number
+
 pipeline {
 
     agent any
@@ -15,7 +17,11 @@ pipeline {
         stage('3stage'){
             steps{
                 sh 'echo this 3rd stage'
-            }
+                 }
         }
     }
-}
+    post{
+        always{
+            cleanWs()
+        }
+    }
