@@ -6,3 +6,4 @@
 - blue ocean 
 - Embeddable status plugin 
 - badge   
+- AWS secret manager 
