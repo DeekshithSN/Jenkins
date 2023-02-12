@@ -1,15 +1,11 @@
-pipelineJob('job-dsl-plugin') {
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote {
-            url('https://github.com/jenkinsci/job-dsl-plugin.git')
-          }
-          branch('*/master')
+pipelineJob('example') {
+    definition {
+        parameters {
+        choiceParam('myParameterName', ['option 1 (default)', 'option 2', 'option 3'], 'my description')
+     }
+        cps {
+            script(readFileFromWorkspace('project-a-workflow.groovy'))
+            sandbox()
         }
-      }
-      lightweight()
     }
-  }
 }
