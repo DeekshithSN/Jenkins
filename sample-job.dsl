@@ -1,11 +1,25 @@
-pipelineJob('example') {
+pipelineJob('example.dsl') {
+
+   description('this is dsl example')
+   triggers {
+      cron('* * * * *')
+    }
+    logRotator {
+        numToKeep(5)
+        artifactNumToKeep(1)
+    }
+    
     definition {
-        parameters {
-        choiceParam('myParameterName', ['option 1 (default)', 'option 2', 'option 3'], 'my description')
-     }
-        cps {
-            script(readFileFromWorkspace('project-a-workflow.groovy'))
-            sandbox()
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url('https://github.com/DeekshithSN/shared-library.git')
+                    }
+                    branch('master')
+                }
+            }
+            scriptPath("Jenkinsfile")
         }
     }
 }
