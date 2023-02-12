@@ -8,3 +8,4 @@
 - Embeddable status plugin 
 - badge   
 - AWS secret manager 
+- Job DSL
