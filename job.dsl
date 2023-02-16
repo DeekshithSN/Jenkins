@@ -1,4 +1,4 @@
-pipelineJob('job.dsl') {
+pipelineJob('example.dsl') {
     description('My First DSL job')
     triggers {
         cron('* * * * *')
