@@ -14,7 +14,7 @@ pipelineJob('example.dsl') {
                     remote {
                         url('https://github.com/edmondgodwin/Jenkins.git')
                     }
-                    branch('feat/dsl-job')
+                    branch('master')
                 }
             }
             scriptPath('Jenkinsfile')
