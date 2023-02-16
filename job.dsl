@@ -17,7 +17,7 @@ pipelineJob('example.dsl') {
                     branch('master')
                 }
             }
-            scriptPath('Jenkinsfile')
+            scriptPath("Jenkinsfile")
         }
     }
 }
