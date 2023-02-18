@@ -9,3 +9,4 @@
 - badge   
 - AWS secret manager 
 - Job DSL
+- Config File Provider
