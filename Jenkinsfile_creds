@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    environment {
+                GITHUB_CREDS = credentials('jenkins-github-creds')
+            }
+    stages {
+        stage('Github stage') {
+            
+            steps {
+                script {
+                        sh 'curl -s -u $GITHUB_CREDS_USR:$GITHUB_CREDS_PSW https://api.github.com/repos/$GITHUB_CREDS_USR/kubernetes/branches'
+                }
+            }
+        }
+    }
+}
