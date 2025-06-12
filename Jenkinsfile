@@ -1,62 +1,64 @@
-currentBuild.displayName = "test-ui #"+currentBuild.number
-
-
-pipeline {
-
-    environment{
-        script_options = "--clean 30"
-        docker_password = credentials('docker-usr-pass')
-    }
-
-    options { 
-        buildDiscarder(logRotator(numToKeepStr: '5')) 
-        timeout(time: 2, unit: 'MINUTES')  
-        timestamps()
-        }
-    parameters { 
-        string(name: 'DEPLOY_ENV', defaultValue: 'staging', description: 'this is env') 
-        text(name: 'DEPLOY_TEXT', defaultValue: 'One\nTwo\nThree\n', description: 'this deloyment notes')
-        }
-
-    triggers { 
-        cron('H */4 * * 1-5') 
-        }
-
+pipeline{
     agent any
-    stages {
-        
-        stage('init'){
-            steps{
-                timeout(1){
-                    script{
-                        echo "$script_options"
-                        sh 'echo this first stage'
-                        sh 'docker login -u $docker_password_USR -p $docker_password_PSW'
-                        sh "echo ${params.DEPLOY_ENV}"
-                        currentBuild.description = "The branch built + $GIT_BRANCH"
-                        addBadge(icon: 'green.gif', text: 'hello')
-                    }
-                }
-            }
-        }
-        stage('secondstage'){
-
-            when{
-                environment  name:'GIT_BRANCH', value: 'origin/master'
-            }
+    environment{
+        script_options = '--clean30'
+        Docker_cred = credentials('docker-cred')
+    }
+    options{
+       buildDiscarder(logRotator(numToKeepStr: '5'))
+        timestamps() 
+    }
+    stages{
+        stage('clone'){
             agent {
-                    docker {
-                        image 'maven'
-                    }
+                docker {
+                    image 'maven'
                 }
+            }
+            environment{
+                script_options = '--clean 50'
+            }
             steps{
-                sh 'printenv'
                 sh 'mvn --version'
+                sh 'printenv'
+                sh 'echo $script_options'
             }
         }
-        stage('3stage'){
+
+        stage('build'){
             steps{
-                sh 'echo this 3rd stage'
+                sh 'echo node version'
+                sh 'printenv'
+            }
+            post{
+                success{
+                    sh 'echo build completed'
+                }
+                aborted{
+                    sh 'echo build aborted'
+                }
+            }
+        }
+
+        stage('docker login'){
+            steps{
+                sh 'docker login -u $Docker_cred_USR -p $Docker_cred_PSW'
+            }
+        }
+
+        stage('Parallel'){
+            parallel {
+                stage('docker build'){
+                    steps{
+                        sh 'echo docker build'
+                    }
+                }
+                stage('docker push'){
+                    steps{
+                        sh 'echo docker push'
+                    }
+                }
+        
             }
         }
     }
