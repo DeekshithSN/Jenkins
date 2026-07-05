@@ -1,0 +1,121 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+echo "========================================"
+echo "Updating the system"
+echo "========================================"
+sudo apt update
+sudo apt upgrade -y
+
+echo "========================================"
+echo "Installing prerequisite packages"
+echo "========================================"
+sudo apt install -y \
+    software-properties-common \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    wget \
+    unzip \
+    zip \
+    gnupg \
+    lsb-release
+
+echo "========================================"
+echo "Installing OpenJDK 21"
+echo "========================================"
+sudo apt install -y openjdk-21-jdk
+
+echo "========================================"
+echo "Setting Java 21 as default"
+echo "========================================"
+sudo update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java
+sudo update-alternatives --set javac /usr/lib/jvm/java-21-openjdk-amd64/bin/javac
+
+echo "========================================"
+echo "Setting JAVA_HOME"
+echo "========================================"
+
+if ! grep -q "JAVA_HOME" /etc/profile; then
+    echo 'export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64' | sudo tee -a /etc/profile
+    echo 'export PATH=$JAVA_HOME/bin:$PATH' | sudo tee -a /etc/profile
+fi
+
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+
+echo "========================================"
+echo "Installing Git"
+echo "========================================"
+sudo apt install -y git
+
+echo "========================================"
+echo "Installing Maven"
+echo "========================================"
+sudo apt install -y maven
+
+echo "========================================"
+echo "Installing OpenSSH Server"
+echo "========================================"
+sudo apt install -y openssh-server
+
+sudo systemctl enable ssh
+sudo systemctl restart ssh
+
+echo "========================================"
+echo "Installing Docker"
+echo "========================================"
+sudo apt install -y docker.io
+
+sudo systemctl enable docker
+sudo systemctl start docker
+
+sudo usermod -aG docker ubuntu
+
+echo "========================================"
+echo "Creating Jenkins workspace"
+echo "========================================"
+sudo mkdir -p /home/ubuntu/jenkins
+sudo chown -R ubuntu:ubuntu /home/ubuntu/jenkins
+
+echo "========================================"
+echo "Cleaning apt cache"
+echo "========================================"
+sudo apt autoremove -y
+sudo apt autoclean
+sudo apt clean
+
+echo "========================================"
+echo "Installed Versions"
+echo "========================================"
+
+echo ""
+echo "Java Version"
+java -version
+
+echo ""
+echo "JAVA_HOME"
+echo "$JAVA_HOME"
+
+echo ""
+echo "Git Version"
+git --version
+
+echo ""
+echo "Maven Version"
+mvn -version
+
+echo ""
+echo "Docker Version"
+docker --version
+
+echo ""
+echo "SSH Status"
+sudo systemctl status ssh --no-pager
+
+echo ""
+echo "========================================"
+echo "Jenkins EC2 Agent is ready."
+echo "Create an AMI from this instance."
+echo "========================================"
